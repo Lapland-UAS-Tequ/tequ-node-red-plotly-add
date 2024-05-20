@@ -31,8 +31,11 @@
         {
             "name": "chart_name",
             "type": "str",
-            "value": "",
+            "value": "chart_name",
             "ui": {
+                "label": {
+                    "en-US": "Chart name"
+                },
                 "type": "input",
                 "opts": {
                     "types": [
@@ -42,7 +45,7 @@
             }
         },
         {
-            "name": "show_status",
+            "name": "Show status",
             "type": "bool",
             "value": "true",
             "ui": {
@@ -156,12 +159,12 @@
             "navigationStyle": "default"
         },
         {
-            "id": "8629c29bdf1258d7",
+            "id": "514c672563db4cef",
             "type": "subflow:99b41d0e4f06f74d",
-            "z": "37f93c27a1c435dd",
+            "z": "debe57df1350b9f8",
             "name": "",
-            "x": 330,
-            "y": 1260,
+            "x": 230,
+            "y": 1160,
             "wires": [
                 []
             ]

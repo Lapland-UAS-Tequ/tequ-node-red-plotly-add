@@ -7,7 +7,7 @@ Plotly Dashboard 2.0 ui-template.
 
 Run the following command in your Node-RED user directory - typically `~/.node-red`
 
-        npm install Lapland-UAS-Tequ/tequ-node-red-plotly-add
+        npm install tequ-node-red-plotly-add
 
 ## Information
 
