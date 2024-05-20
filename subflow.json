@@ -60,7 +60,7 @@
     ],
     "meta": {
         "module": "tequ-node-red-plotly-add",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "author": "juha.autioniemi@lapinamk.fi",
         "desc": "Plotly Dashboard 2.0 ui-template.",
         "license": "MIT"
@@ -90,7 +90,7 @@
             "z": "99b41d0e4f06f74d",
             "group": "",
             "page": "",
-            "ui": "c9975e78215f4d8a",
+            "ui": "<REPLACE_WITH_YOUR_UI_BASE_ID>",
             "name": "Draw plotly-data",
             "order": 1,
             "width": "4",
@@ -125,7 +125,7 @@
             "type": "function",
             "z": "99b41d0e4f06f74d",
             "name": "status",
-            "func": "let value = msg.payload.value;\n\nif (env.get(\"show_status\")) {\n    //node.status({fill:\"blue\",shape:\"dot\",text:\"Received: \"+value});\n}\nelse {\n    //\n}\n\nlet chart_name = \"\";\n\nif(\"chart_name\" in msg){\n    chart_name = msg.chart_name;\n}\nelse{\n    chart_name = env.get(\"chart_name\");\n}\n\nreturn msg;",
+            "func": "let value = msg.payload.value;\n\nif (env.get(\"show_status\")) {\n    node.status({fill:\"blue\",shape:\"dot\",text:\"Received: \"+value});\n}\nelse {\n    //\n}\n\nlet chart_name = \"\";\n\nif(\"chart_name\" in msg){\n    chart_name = msg.chart_name;\n}\nelse{\n    chart_name = env.get(\"chart_name\");\n}\n\nreturn msg;",
             "outputs": 1,
             "timeout": 0,
             "noerr": 0,
@@ -151,7 +151,7 @@
             "wires": []
         },
         {
-            "id": "c9975e78215f4d8a",
+            "id": "<REPLACE_WITH_YOUR_UI_BASE_ID>",
             "type": "ui-base",
             "name": "UI",
             "path": "/dashboard",
@@ -159,12 +159,12 @@
             "navigationStyle": "default"
         },
         {
-            "id": "514c672563db4cef",
+            "id": "5724de7a73044d14",
             "type": "subflow:99b41d0e4f06f74d",
             "z": "debe57df1350b9f8",
             "name": "",
-            "x": 230,
-            "y": 1160,
+            "x": 850,
+            "y": 220,
             "wires": [
                 []
             ]
