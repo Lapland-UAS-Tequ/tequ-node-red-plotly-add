@@ -13,11 +13,8 @@ Run the following command in your Node-RED user directory - typically `~/.node-r
 
 Manages creation, adding data and clearing Plotly-chart.
 
-- You have to create ui-template that holds plotly chart with 
+- You have to create separate ui-template that holds plotly chart with 
 unique id.
-- You have to edit subflow.json file manually after installation and replace ui-base id on 
-  flow -> ui-template and flow -> ui-base.
-
 
 Example ui-template:
 
