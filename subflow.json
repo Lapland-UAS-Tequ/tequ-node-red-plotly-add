@@ -2,7 +2,7 @@
     "id": "99b41d0e4f06f74d",
     "type": "subflow",
     "name": "add",
-    "info": "Manages creation, adding data and clearing Plotly-chart.\r\n\r\nYou must create ui-template that holds plotly chart with \r\nunique id.\r\n\r\nExample ui-template:\r\n\r\n``\r\n<template>\r\n    <div id=\"plotly_chart\"></div>\r\n</template>\r\n``\r\n\r\nThis node can manage creation and adding data to multiple plotly-charts.\r\n",
+    "info": "Manages creation, adding data and clearing Plotly-chart.\r\n\r\n- You have to create ui-template that holds plotly chart with \r\nunique id.\r\n- You have to edit subflow.json file manually after installation and replace ui-base id on \r\n  flow -> ui-template and flow -> ui-base.\r\n\r\n\r\nExample ui-template:\r\n\r\n``\r\n<template>\r\n    <div id=\"plotly_chart\"></div>\r\n</template>\r\n``\r\n\r\nThis node can manage creation and adding data to multiple plotly-charts.\r\n",
     "category": "Plotly",
     "in": [
         {
@@ -49,6 +49,9 @@
             "type": "bool",
             "value": "true",
             "ui": {
+                "label": {
+                    "en-US": "Show status"
+                },
                 "type": "input",
                 "opts": {
                     "types": [
@@ -90,7 +93,7 @@
             "z": "99b41d0e4f06f74d",
             "group": "",
             "page": "",
-            "ui": "REPLACE_WITH_YOUR_UI_BASE_ID",
+            "ui": "c9975e78215f4d8a",
             "name": "Draw plotly-data",
             "order": 1,
             "width": "4",
@@ -151,12 +154,23 @@
             "wires": []
         },
         {
-            "id": "REPLACE_WITH_YOUR_UI_BASE_ID",
+            "id": "c9975e78215f4d8a",
             "type": "ui-base",
             "name": "UI",
             "path": "/dashboard",
             "showPathInSidebar": false,
             "navigationStyle": "default"
+        },
+        {
+            "id": "5724de7a73044d14",
+            "type": "subflow:99b41d0e4f06f74d",
+            "z": "debe57df1350b9f8",
+            "name": "",
+            "x": 850,
+            "y": 220,
+            "wires": [
+                []
+            ]
         }
     ]
 }
