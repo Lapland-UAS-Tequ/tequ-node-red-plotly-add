@@ -62,7 +62,7 @@
         },
         {
             "name": "UI",
-            "type": "ui-page",
+            "type": "ui-base",
             "value": "c9975e78215f4d8a",
             "ui": {
                 "type": "conf-types"
@@ -101,7 +101,7 @@
             "z": "99b41d0e4f06f74d",
             "group": "",
             "page": "",
-            "ui": "${Dashboard UI}",
+            "ui": "${UI}",
             "name": "Draw plotly-data",
             "order": 1,
             "width": "4",
@@ -169,7 +169,7 @@
             "env": [
                 {
                     "name": "UI",
-                    "value": "87816546af71cd2c",
+                    "value": "c9975e78215f4d8a",
                     "type": "conf-type"
                 },
                 {
@@ -178,7 +178,7 @@
                     "type": "str"
                 }
             ],
-            "x": 790,
+            "x": 730,
             "y": 140,
             "wires": [
                 []
