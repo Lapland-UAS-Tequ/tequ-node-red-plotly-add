@@ -45,7 +45,7 @@
             }
         },
         {
-            "name": "Show status",
+            "name": "show_status",
             "type": "bool",
             "value": "true",
             "ui": {
@@ -60,7 +60,7 @@
     ],
     "meta": {
         "module": "tequ-node-red-plotly-add",
-        "version": "0.0.3",
+        "version": "0.0.4",
         "author": "juha.autioniemi@lapinamk.fi",
         "desc": "Plotly Dashboard 2.0 ui-template.",
         "license": "MIT"
@@ -90,7 +90,7 @@
             "z": "99b41d0e4f06f74d",
             "group": "",
             "page": "",
-            "ui": "<REPLACE_WITH_YOUR_UI_BASE_ID>",
+            "ui": "REPLACE_WITH_YOUR_UI_BASE_ID",
             "name": "Draw plotly-data",
             "order": 1,
             "width": "4",
@@ -151,23 +151,12 @@
             "wires": []
         },
         {
-            "id": "<REPLACE_WITH_YOUR_UI_BASE_ID>",
+            "id": "REPLACE_WITH_YOUR_UI_BASE_ID",
             "type": "ui-base",
             "name": "UI",
             "path": "/dashboard",
             "showPathInSidebar": false,
             "navigationStyle": "default"
-        },
-        {
-            "id": "5724de7a73044d14",
-            "type": "subflow:99b41d0e4f06f74d",
-            "z": "debe57df1350b9f8",
-            "name": "",
-            "x": 850,
-            "y": 220,
-            "wires": [
-                []
-            ]
         }
     ]
 }
