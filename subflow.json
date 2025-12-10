@@ -71,7 +71,7 @@
     ],
     "meta": {
         "module": "tequ-node-red-plotly-add",
-        "version": "0.0.5",
+        "version": "0.2",
         "author": "juha.autioniemi@lapinamk.fi",
         "desc": "Plotly Dashboard 2.0 ui-template.",
         "license": "MIT"
@@ -101,13 +101,13 @@
             "z": "99b41d0e4f06f74d",
             "group": "",
             "page": "",
-            "ui": "${UI}",
+            "ui": "7ce3a702dd20040c",
             "name": "Draw plotly-data",
             "order": 1,
             "width": "4",
             "height": "7",
             "head": "",
-            "format": "<script src=\"https://cdn.plot.ly/plotly-2.30.0.min.js\" charset=\"utf-8\"></script>\n<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js\"></script>\n\n<script> \n    function updateRTChart(traceName, value, timestamp, chart_id,chart_history_size, line_params) {\n        \n        let trace = {}\n\n        if(Array.isArray(value) && Array.isArray(timestamp)){\n            trace = {\n                mode: \"lines\",\n                type: \"scatter\",\n                x: timestamp,\n                y: value,\n                name: traceName,\n                line:line_params\n            };\n        }\n        else{\n            trace = {\n                mode: \"lines\",\n                type: \"scatter\",\n                x: [timestamp],\n                y: [value],\n                name: traceName,\n                line:line_params\n            };\n        }\n          \n\n        let chart_element = document.getElementById(chart_id);\n        let targetIndex = findOutIndexOfPlotlyChartTrace(chart_element, trace)\n        \n        // Update data to existing chart\n        if (targetIndex !== -1) {\n            let data_x = chart_element.data[targetIndex].x;\n            let data_y = chart_element.data[targetIndex].y;\n\n            let updated_x = data_x.concat(trace.x);\n            let updated_y = data_y.concat(trace.y);\n\n            if (updated_x.length  == chart_history_size) {\n                updated_x.shift()\n                updated_x.shift()\n            }\n            else if (updated_x.length  > chart_history_size) {\n                updated_x = updated_x.slice(Math.max(updated_x.length - chart_history_size, 0))\n                updated_y = updated_y.slice(Math.max(updated_y.length - chart_history_size, 0))\n            }\n\n            Plotly.update(chart_element, {\n                x: [updated_x],\n                y: [updated_y]\n            }, {}, [targetIndex]);  \n        }\n        // Add trace to chart\n        else {\n            Plotly.addTraces(chart_element, trace);\n        }\n    }\n    \n    function findOutIndexOfPlotlyChartTrace(chart_element, trace) {\n        // Find out index of data\n        let targetIndex = -1\n        try {\n            for (let k = 0; k < (chart_element.data).length; k++) {\n                if (chart_element.data[k].name == trace.name) {\n                    targetIndex = k;\n                }\n            }\n        } catch (e) {\n            targetIndex = -1\n        }\n\n        return targetIndex\n    }\n    \n    // Subscribe to the incoming msg's\n    this.$socket.on('msg-input:' + this.id, function(msg) {\n        \n        let action = msg.action;\n        if(action == \"create\"){\n            \n            let dom_id  = msg.chart_name;\n            console.log(\"Create chart to: \"+dom_id)\n            if(document.getElementById(dom_id) !== null){\n                try{\n                    let data = msg.payload.data;\n                    let config = msg.payload.config;\n                    let layout = msg.payload.layout;    \n                    let chart_name = dom_id;\n                    Plotly.newPlot(chart_name, data, layout, config);\n                }\n                catch(e){\n                    // Pass this error\n                    // console.log(\"Plotly not yet ready or available\")\n                }\n            }\n            else{\n                // pass this error\n                //console.log(\"Plotly chart already created\")\n            }\n            \n            \n        }   \n        else if(action == \"append_data\"){          \n            \n            let dom_id = msg.chart_name;\n            console.log(\"Append data to: \"+dom_id)\n            if(document.getElementById(dom_id) !== null){\n                try{\n                    let value = msg.payload.value;\n                    let timestamp = msg.payload.timestamp;\n                    let traceName = msg.topic;\n                    let chart_name = dom_id;\n                    let chart_history_size = msg.payload.chart_history_size;\n                    let line_params = msg.line_params;\n                    updateRTChart(traceName, value, timestamp, chart_name, chart_history_size, line_params)\n                }\n                catch(e){\n                    // Pass this error\n                    // console.log(\"Append data failed: \"+e)\n                    // console.log(msg)\n                }\n            }\n            else{\n                // pass this error, page is not active where charts are\n                // console.log(\"Plotly element: \"+dom_id+\" does not exist on DOM.\")\n            }\n            \n            \n        }\n        else if(action == \"clear\"){ \n            let data = []; \n            let chart_name = msg.chart_name;\n            Plotly.newPlot(chart_name, data);\n        }    \n    })\n</script>",
+            "format": "<script src=\"https://cdn.plot.ly/plotly-3.1.0.min.js\" charset=\"utf-8\"></script>\n<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\"\n    integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" crossorigin=\"anonymous\">\n</script>\n<script src=\"https://cdn.plot.ly/plotly-locale-fi-latest.js\"></script>\n<script>Plotly.setPlotConfig({locale: 'fi-FI'})</script>\n<script> \n    function updateRTChart(traceName, value, timestamp, chart_id,chart_history_size, line_params,y_axis, chart_mode,chart_type, marker_params,hover_template) {\n        \n        let trace = {}\n\n        if(Array.isArray(value) && Array.isArray(timestamp)){\n            trace = {\n                mode: chart_mode,\n                type: chart_type,\n                x: timestamp,\n                y: value,\n                name: traceName,\n                line:line_params,\n                yaxis: y_axis,\n                marker:marker_params,\n                hovertemplate:hover_template\n            };\n        }\n        else{\n            trace = {\n                mode: chart_mode,\n                type: chart_type,\n                x: [timestamp],\n                y: [value],\n                name: traceName,\n                line:line_params,\n                yaxis: y_axis,\n                marker:marker_params,\n                hovertemplate:hover_template\n            };\n        }\n\n        let chart_element = document.getElementById(chart_id);\n        let targetIndex = findOutIndexOfPlotlyChartTrace(chart_element, trace)\n        \n        // Update data to existing chart\n        if (targetIndex !== -1) {\n            let data_x = chart_element.data[targetIndex].x;\n            let data_y = chart_element.data[targetIndex].y;\n\n            let updated_x = data_x.concat(trace.x);\n            let updated_y = data_y.concat(trace.y);\n\n            if (updated_x.length  == chart_history_size) {\n                updated_x.shift()\n                updated_x.shift()\n            }\n            else if (updated_x.length  > chart_history_size) {\n                updated_x = updated_x.slice(Math.max(updated_x.length - chart_history_size, 0))\n                updated_y = updated_y.slice(Math.max(updated_y.length - chart_history_size, 0))\n            }\n\n            trace.x = [updated_x]\n            trace.y = [updated_x]\n\n            //Plotly.update(chart_element, trace, {}, [targetIndex]);\n\n            Plotly.update(chart_element, {\n                x: [updated_x],\n                y: [updated_y],\n                yaxis: y_axis\n            }, {}, [targetIndex]);  \n        }\n        // Add trace to chart\n        else {\n            Plotly.addTraces(chart_element, trace);\n        }\n    }\n\n    function addDataToChart(traceName, value, timestamp, chart_id, chart_history_size, line_params,y_axis, chart_mode,chart_type, marker_params,hover_template){\n        let trace = {}\n        \n        trace = {\n            mode: chart_mode,\n            type: chart_type,\n            x: timestamp,\n            y: value,\n            name: traceName,\n            line:line_params,\n            yaxis: y_axis,\n            marker:marker_params,\n            hovertemplate:hover_template\n        };\n\n\n        let chart_element = document.getElementById(chart_id);\n        let targetIndex = findOutIndexOfPlotlyChartTrace(chart_element, trace);\n\n        Plotly.update(chart_element, {\n            x: [timestamp],\n            y: [value],\n            yaxis: y_axis\n        }, {}, [targetIndex]);\n\n    }\n\n\n    function findOutIndexOfPlotlyChartTrace(chart_element, trace) {\n        // Find out index of data\n        let targetIndex = -1\n        try {\n            for (let k = 0; k < (chart_element.data).length; k++) {\n                if (chart_element.data[k].name == trace.name) {\n                    targetIndex = k;\n                }\n            }\n        } catch (e) {\n            targetIndex = -1\n        }\n\n        return targetIndex\n    }\n    \n    // Subscribe to the incoming msg's\n    this.$socket.on('msg-input:' + this.id, function(msg) {\n        \n        let action = msg.action;\n        \n        if(action == \"create\"){\n            \n            let dom_id  = msg.chart_name;\n            console.log(\"Create chart to: \"+dom_id)\n            if(document.getElementById(dom_id) !== null){\n                try{\n                    let data = msg.payload.data;\n                    let config = msg.payload.config;\n                    let layout = msg.payload.layout;    \n                    let chart_name = dom_id;\n                    let graphDiv = document.getElementById(chart_name)\n                    //console.log(layout)\n                    //console.log(config)\n                    //Plotly.newPlot(chart_name, [], [], config);\n                    Plotly.newPlot(chart_name, data, layout, config);\n                    console.log(\"Plotly chart \"+chart_name+\" created\")\n                    //Plotly.update(chart_name,data,layout)\n                    /*\n                    for(let trace in data){\n                        Plotly.addTraces(chart_name, data[trace]);\n                    } \n                    */    \n                }\n                catch(e){\n                    // Pass this error\n                    console.log(e)\n                    console.log(\"Plotly not yet ready or available\")\n                }\n            }\n            else{\n                // pass this error\n                console.log(\"Plotly chart already created\")\n            }\n            \n            \n        }   \n        else if(action == \"update_data\"){          \n            \n            let dom_id = msg.chart_name;\n            //console.log(\"Update data in: \"+dom_id)\n            if(document.getElementById(dom_id) !== null){\n                try{\n                    let value = msg.payload.value;\n                    let timestamp = msg.payload.timestamp;\n                    let traceName = msg.topic;\n                    let chart_name = dom_id;\n                    let chart_history_size = msg.payload.chart_history_size;\n                    let line_params = msg.line_params;\n                    let y_axis = msg.y_axis\n                    let chart_mode = msg.chart_mode;\n                    let chart_type = msg.chart_type;\n                    let marker_params = msg.marker_params;\n                    let hover_template = msg.hover_template;\n                    updateRTChart(traceName, value, timestamp, chart_name, chart_history_size, line_params,y_axis,chart_mode,chart_type, marker_params,hover_template)\n                }\n                catch(e){\n                    // Pass this error\n                    // console.log(\"Append data failed: \"+e)\n                    // console.log(msg)\n                }\n            }\n            else{\n                // pass this error, page is not active where charts are\n                // console.log(\"Plotly element: \"+dom_id+\" does not exist on DOM.\")\n            }\n            \n            \n        }\n        else if(action == \"add_data\"){          \n            \n            let dom_id = msg.chart_name;\n            //console.log(\"Adding data to: \"+dom_id)\n            if(document.getElementById(dom_id) !== null){\n                try{\n                    let value = msg.payload.value;\n                    let timestamp = msg.payload.timestamp;\n                    let traceName = msg.topic;\n                    let chart_name = dom_id;\n                    let chart_history_size = msg.payload.chart_history_size;\n                    let line_params = msg.line_params;\n                    let y_axis = msg.y_axis\n                    let chart_mode = msg.chart_mode;\n                    let chart_type = msg.chart_type;\n                    let marker_params = msg.marker_params;\n                    let hover_template = msg.hover_template;\n                    addDataToChart(traceName, value, timestamp, chart_name, chart_history_size, line_params,y_axis,chart_mode,chart_type, marker_params,hover_template)\n                }\n                catch(e){\n                    // Pass this error\n                    // console.log(\"Append data failed: \"+e)\n                    // console.log(msg)\n                }\n            }\n            else{\n                // pass this error, page is not active where charts are\n                // console.log(\"Plotly element: \"+dom_id+\" does not exist on DOM.\")\n            }\n            \n            \n        }\n\n\n        else if(action == \"clear\"){ \n            let data = []; \n            let chart_name = msg.chart_name;\n            Plotly.newPlot(chart_name, data);\n        }    \n    })\n</script>",
             "storeOutMessages": true,
             "passthru": true,
             "resendOnRefresh": true,
@@ -124,7 +124,9 @@
             "type": "status",
             "z": "99b41d0e4f06f74d",
             "name": "",
-            "scope": null,
+            "scope": [
+                "e7ea4236b02c9be3"
+            ],
             "x": 340,
             "y": 160,
             "wires": [
@@ -136,7 +138,7 @@
             "type": "function",
             "z": "99b41d0e4f06f74d",
             "name": "status",
-            "func": "let value = Math.round(msg.payload.value*100)/100;\n\nif (env.get(\"show_status\")) {\n    node.status({fill:\"blue\",shape:\"dot\",text:\"Received: ~\"+value});\n}\nelse {\n    //\n}\n\nlet chart_name = \"\";\n\nif(\"chart_name\" in msg){\n    chart_name = msg.chart_name;\n}\nelse{\n    chart_name = env.get(\"chart_name\");\n}\n\nreturn msg;",
+            "func": "let received_value = msg.payload.value;\n\nif(Array.isArray(received_value)){\n    received_value = received_value.length + \" values\"\n}\nelse{\n    received_value = Math.round(received_value * 100) / 100;\n}\n\nif (env.get(\"show_status\")) {  \n    node.status({ fill: \"blue\", shape: \"dot\", text: \"Adding: \" + received_value });\n}\nelse {\n    //\n}\n\nlet chart_name = \"\";\n\nif(\"chart_name\" in msg){\n    chart_name = msg.chart_name;\n}\nelse{\n    chart_name = env.get(\"chart_name\");\n}\n\nreturn msg;",
             "outputs": 1,
             "timeout": 0,
             "noerr": 0,
@@ -162,34 +164,50 @@
             "wires": []
         },
         {
-            "id": "5724de7a73044d14",
+            "id": "7ce3a702dd20040c",
+            "type": "ui-base",
+            "name": "Koti",
+            "path": "/dashboard",
+            "appIcon": "",
+            "includeClientData": true,
+            "acceptsClientConfig": [
+                "ui-notification",
+                "ui-control"
+            ],
+            "showPathInSidebar": false,
+            "headerContent": "page",
+            "navigationStyle": "default",
+            "titleBarStyle": "default",
+            "showReconnectNotification": true,
+            "notificationDisplayTime": 1,
+            "showDisconnectNotification": true,
+            "allowInstall": true
+        },
+        {
+            "id": "0b0e53f0ead03c39",
             "type": "subflow:99b41d0e4f06f74d",
-            "z": "debe57df1350b9f8",
+            "z": "c49b3020b5a4b737",
             "name": "",
             "env": [
                 {
-                    "name": "chart_name",
-                    "value": "",
-                    "type": "str"
-                },
-                {
                     "name": "UI",
-                    "value": "c9975e78215f4d8a",
-                    "type": "conf-type"
-                },
-                {
-                    "name": "Dashboard UI",
                     "value": "",
-                    "type": "str"
+                    "type": "conf-type"
                 }
             ],
-            "x": 910,
-            "y": 60,
+            "x": 430,
+            "y": 240,
             "wires": [
-                [
-                    "357c2c5af9e5ce20"
-                ]
+                []
             ]
+        },
+        {
+            "id": "adabdf9f617c1a25",
+            "type": "global-config",
+            "env": [],
+            "modules": {
+                "@flowfuse/node-red-dashboard": "1.27.1"
+            }
         }
     ]
 }
