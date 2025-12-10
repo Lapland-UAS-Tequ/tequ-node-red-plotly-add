@@ -71,7 +71,7 @@
     ],
     "meta": {
         "module": "tequ-node-red-plotly-add",
-        "version": "0.2",
+        "version": "0.2.0",
         "author": "juha.autioniemi@lapinamk.fi",
         "desc": "Plotly Dashboard 2.0 ui-template.",
         "license": "MIT"
@@ -202,7 +202,7 @@
             ]
         },
         {
-            "id": "adabdf9f617c1a25",
+            "id": "d9f58d78e78d570b",
             "type": "global-config",
             "env": [],
             "modules": {
