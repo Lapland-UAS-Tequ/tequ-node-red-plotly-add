@@ -71,7 +71,7 @@
     ],
     "meta": {
         "module": "tequ-node-red-plotly-add",
-        "version": "0.2.0",
+        "version": "0.2.1",
         "author": "juha.autioniemi@lapinamk.fi",
         "desc": "Plotly Dashboard 2.0 ui-template.",
         "license": "MIT"
@@ -101,7 +101,7 @@
             "z": "99b41d0e4f06f74d",
             "group": "",
             "page": "",
-            "ui": "7ce3a702dd20040c",
+            "ui": "${UI}",
             "name": "Draw plotly-data",
             "order": 1,
             "width": "4",
@@ -164,29 +164,9 @@
             "wires": []
         },
         {
-            "id": "7ce3a702dd20040c",
-            "type": "ui-base",
-            "name": "Koti",
-            "path": "/dashboard",
-            "appIcon": "",
-            "includeClientData": true,
-            "acceptsClientConfig": [
-                "ui-notification",
-                "ui-control"
-            ],
-            "showPathInSidebar": false,
-            "headerContent": "page",
-            "navigationStyle": "default",
-            "titleBarStyle": "default",
-            "showReconnectNotification": true,
-            "notificationDisplayTime": 1,
-            "showDisconnectNotification": true,
-            "allowInstall": true
-        },
-        {
-            "id": "0b0e53f0ead03c39",
+            "id": "a3b62221969ecf40",
             "type": "subflow:99b41d0e4f06f74d",
-            "z": "c49b3020b5a4b737",
+            "z": "a5141ccde96c6713",
             "name": "",
             "env": [
                 {
@@ -195,18 +175,18 @@
                     "type": "conf-type"
                 }
             ],
-            "x": 430,
-            "y": 240,
+            "x": 510,
+            "y": 400,
             "wires": [
                 []
             ]
         },
         {
-            "id": "d9f58d78e78d570b",
+            "id": "c202f952307bdfe2",
             "type": "global-config",
             "env": [],
             "modules": {
-                "@flowfuse/node-red-dashboard": "1.27.1"
+                "@flowfuse/node-red-dashboard": "1.26.0"
             }
         }
     ]
