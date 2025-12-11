@@ -14,5 +14,12 @@
       "": "subflow.js"
     }
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "node-red-contrib-moment": "latest",
+    "tequ-node-red-plotly-trace": "github:Lapland-UAS-Tequ/tequ-node-red-plotly-trace",
+    "tequ-node-red-plotly-chart": "github:Lapland-UAS-Tequ/tequ-node-red-plotly-chart",
+    "tequ-node-red-plotly-memory": "github:Lapland-UAS-Tequ/tequ-node-red-plotly-memory",
+    "tequ-node-red-plotly-create": "github:Lapland-UAS-Tequ/tequ-node-red-plotly-create"
+  }
 }
